@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanguard | Barbearia Neon</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a id="brandLink" class="brand" href="index.html">VANGUARD</a>
+        <nav class="nav-links">
+          <a href="#servicos">Serviços</a>
+          <a href="#feedbacks">Feedbacks</a>
+          <a href="#galeria">Galeria</a>
+        </nav>
+        <div id="topbarActions" class="topbar-actions">
+          <a class="btn btn-outline-magenta" href="login.html">LOGIN</a>
+          <a class="btn btn-neon-magenta" href="cadastro.html">CADASTRO</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero-panel neon-border-cyan">
+          <div>
+            <p class="eyebrow">Barbearia premium · cyberpunk</p>
+            <h1>Cortes modernos com energia de neon.</h1>
+            <p>Experiência exclusiva para quem quer estilo, precisão e presença.</p>
+            <div class="topbar-actions">
+              <a id="heroPrimaryCta" class="btn btn-neon-magenta" href="cadastro.html">Criar conta</a>
+              <a class="btn btn-outline-magenta" href="#servicos">Ver serviços</a>
+            </div>
+          </div>
+          <div class="hero-stat neon-border-pink">
+            <h3>+500 clientes</h3>
+            <p>Agendamento rápido, barbearia acolhedora e visual impecável.</p>
+          </div>
+        </section>
+
+        <section id="servicos" class="section-card">
+          <div class="section-heading">
+            <p class="eyebrow">Cortes e serviços</p>
+            <h2>O que oferecemos</h2>
+          </div>
+          <div id="servicosList" class="service-grid">
+            <!-- Os serviços são carregados dinamicamente pela API -->
+            <p class="hint" id="servicosLoading">Carregando serviços...</p>
+          </div>
+        </section>
+
+        <section id="feedbacks" class="section-card">
+          <div class="section-heading">
+            <p class="eyebrow">Avaliações</p>
+            <h2>Feedbacks de clientes</h2>
+          </div>
+          <div id="feedbacksList" class="feedback-grid">
+            <article class="feedback-card neon-border-pink">
+              <div class="stars">★★★★★</div>
+              <p>“Corte impecável, ambiente premium e atendimento de primeira.”</p>
+              <strong>Lucas · Cliente</strong>
+            </article>
+            <article class="feedback-card neon-border-cyan">
+              <div class="stars">★★★★★</div>
+              <p>“A barba ficou perfeita e o espaço é muito estiloso.”</p>
+              <strong>Rafael · Cliente</strong>
+            </article>
+            <article class="feedback-card neon-border-pink">
+              <div class="stars">★★★★★</div>
+              <p>“Minha experiência foi ótima, recomendo demais.”</p>
+              <strong>Nina · Cliente</strong>
+            </article>
+            <article class="feedback-card neon-border-cyan">
+              <div class="stars">★★★★★</div>
+              <p>“Muito profissional e com acabamento impecável.”</p>
+              <strong>Thiago · Cliente</strong>
+            </article>
+          </div>
+        </section>
+
+        <section id="galeria" class="section-card">
+          <div class="section-heading">
+            <p class="eyebrow">Galeria</p>
+            <h2>Estilo que chama atenção</h2>
+          </div>
+          <div class="service-grid">
+            <div class="card neon-border-cyan"><h3>Precision Cut</h3><p>Linhas limpas e presença marcante.</p></div>
+            <div class="card neon-border-pink"><h3>Barba 3D</h3><p>Volume e definição em cada detalhe.</p></div>
+            <div class="card neon-border-cyan"><h3>Glow Style</h3><p>Visual moderno para todos os dias.</p></div>
+            <div class="card neon-border-pink"><h3>Look Premium</h3><p>Elegância e impacto em um só corte.</p></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    
+    <script>
+      const loggedUser = JSON.parse(localStorage.getItem('logado') || 'null');
+      const topbarActions = document.getElementById('topbarActions');
+      const brandLink = document.getElementById('brandLink');
+      const heroPrimaryCta = document.getElementById('heroPrimaryCta');
+
+      if (brandLink) {
+        brandLink.href = loggedUser && !loggedUser.admin ? 'cliente.html' : 'index.html';
+      }
+
+      if (topbarActions) {
+        if (loggedUser && !loggedUser.admin) {
+          topbarActions.innerHTML = `
+            <a class="profile-pill-link" href="cliente.html">
+              <img class="avatar avatar-small" src="${loggedUser.foto || 'https://via.placeholder.com/72'}" alt="Foto do cliente" />
+              <span>${loggedUser.nome}</span>
+            </a>
+            <a class="btn btn-neon-magenta" href="cliente.html#agendamento">✂️ Agendar</a>
+          `;
+        } else if (loggedUser && loggedUser.admin) {
+          topbarActions.innerHTML = '<a class="btn btn-outline-magenta" href="admin.html">PAINEL</a>';
+        }
+      }
+
+      if (heroPrimaryCta) {
+        if (loggedUser && !loggedUser.admin) {
+          heroPrimaryCta.textContent = 'AGENDAR';
+          heroPrimaryCta.href = 'cliente.html#agendamento';
+        } else {
+          heroPrimaryCta.textContent = 'Criar conta';
+          heroPrimaryCta.href = 'cadastro.html';
+        }
+      }
+
+      const SUPABASE_URL = 'https://pjwrkecbcddnqfajjgjr.supabase.co/rest/v1';
+      const SUPABASE_KEY = 'sb_publishable_oyWF1sCKBgjqQMic7acIUg_HZnXAiSP';
+      const headers = {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      };
+
+      // ── Carrega serviços da API ─────────────────────────
+      async function carregarServicos() {
+        const servicosList = document.getElementById('servicosList');
+        const loading = document.getElementById('servicosLoading');
+        if (!servicosList) return;
+
+        try {
+          const res = await fetch(`${SUPABASE_URL}/servicos?select=*`, { headers });
+          const servicos = await res.json();
+
+          if (loading) loading.remove();
+
+          if (servicos.length === 0) {
+            servicosList.innerHTML = '<p class="hint">Nenhum serviço cadastrado ainda.</p>';
+            return;
+          }
+
+          const agendaHref = loggedUser && !loggedUser.admin ? 'cliente.html#agendamento' : 'cadastro.html';
+
+          servicosList.innerHTML = servicos.map((s, idx) => {
+            const borderClass = idx % 2 === 0 ? 'neon-border-pink' : 'neon-border-cyan';
+            const fitClass = s.imageFit === 'contain' ? 'service-image--full' : 'service-image--crop';
+            const zoom = (s.zoom || 100) / 100;
+            const posX = s.posX || 0;
+            const posY = s.posY || 0;
+
+            const imageHtml = s.foto
+              ? `<div class="image-crop-preview">
+                   <img class="service-image-blur" src="${s.foto}" alt="" />
+                   <img class="service-image ${fitClass}" src="${s.foto}" alt="${s.nome}"
+                        style="transform: translate(${posX}px, ${posY}px) scale(${zoom});" />
+                 </div>`
+              : '';
+
+            return `
+              <article class="card service-card ${borderClass}">
+                ${imageHtml}
+                <h3>${s.nome}</h3>
+                <p>${s.duracao || ''}</p>
+                <div class="card-price">R$ ${s.preco}</div>
+                <a class="btn btn-neon-magenta" href="${agendaHref}">AGENDAR</a>
+              </article>
+            `;
+          }).join('');
+
+        } catch (err) {
+          console.error('Erro ao carregar serviços:', err);
+          if (loading) loading.textContent = 'Erro ao carregar serviços.';
+        }
+      }
+
+      // ── Carrega feedbacks da API ────────────────────────
+      async function carregarFeedbacks() {
+        const feedbacksList = document.getElementById('feedbacksList');
+        if (!feedbacksList) return;
+
+        try {
+          const res = await fetch(`${SUPABASE_URL}/feedbacks?select=*`, { headers });
+          const feedbacks = await res.json();
+
+          if (feedbacks.length === 0) return; // Mantém os estáticos se não houver no DB
+
+          feedbacksList.innerHTML = feedbacks.map((f, idx) => {
+            const borderClass = idx % 2 === 0 ? 'neon-border-pink' : 'neon-border-cyan';
+            const estrelas = '★'.repeat(Math.min(f.nota || 5, 5));
+            return `
+              <article class="feedback-card ${borderClass}">
+                <div class="stars">${estrelas}</div>
+                <p>"${f.comentario}"</p>
+                <strong>${f.cliente} · Cliente</strong>
+              </article>
+            `;
+          }).join('');
+
+        } catch (err) {
+          console.error('Erro ao carregar feedbacks:', err);
+        }
+      }
+
+      carregarServicos();
+      carregarFeedbacks();
+    </script>
+  </body>
+</html>

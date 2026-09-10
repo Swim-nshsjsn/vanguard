@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanguard | Admin</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="dashboard-page">
+    <div class="dashboard-shell">
+      <aside class="sidebar">
+        <a class="brand" href="index.html">VANGUARD</a>
+        <nav>
+          <a class="active" href="#clientes">Clientes</a>
+          <a href="#agendamentos">Agendamentos</a>
+          <a href="#servicos">Serviços</a>
+          <a href="login.html">Sair</a>
+        </nav>
+      </aside>
+
+      <main class="dashboard-main">
+        <header class="dashboard-header">
+          <div>
+            <p class="eyebrow">Painel administrativo</p>
+            <h1>Controle total da barbearia</h1>
+          </div>
+          <div class="profile-pill">
+            <img class="avatar" src="https://i.pravatar.cc/100?img=11" alt="Avatar admin" />
+            <span>Admin</span>
+            <button id="logoutBtn" class="btn btn-outline-magenta">Sair</button>
+          </div>
+        </header>
+
+        <section class="metrics-grid">
+          <div class="metric-card neon-border-cyan">
+            <span>Agendamentos Hoje</span>
+            <strong>18</strong>
+          </div>
+          <div class="metric-card neon-border-pink">
+            <span>Clientes</span>
+            <strong>142</strong>
+          </div>
+          <div class="metric-card neon-border-cyan">
+            <span>Feedbacks</span>
+            <strong>64</strong>
+          </div>
+          <div class="metric-card neon-border-pink">
+            <span>Serviços</span>
+            <strong>4</strong>
+          </div>
+          <div class="metric-card neon-border-cyan">
+            <span>Barbeiros</span>
+            <strong>2</strong>
+          </div>
+        </section>
+
+        <section id="clientes" class="table-card">
+          <div class="section-heading">
+            <h3>Clientes cadastrados</h3>
+          </div>
+          <div id="clientesList" class="service-grid"></div>
+        </section>
+
+        <section id="agendamentos" class="table-card">
+          <div class="section-heading">
+            <h3>Agendamentos</h3>
+          </div>
+          <div id="agendaList" class="service-grid"></div>
+        </section>
+
+        <section id="servicos" class="table-card">
+          <div class="section-heading">
+            <h3>Serviços cadastrados</h3>
+          </div>
+          <form id="formServico" class="admin-form">
+            <input type="hidden" id="servicoId" />
+            <input id="servicoNome" placeholder="Nome do serviço" required />
+            <input id="servicoPreco" type="number" min="0" placeholder="Preço" required />
+            <input id="servicoDuracao" placeholder="Duração" />
+            <input type="hidden" id="servicoFotoData" />
+            <input id="servicoFoto" type="file" accept="image/*" />
+            <label class="hint" style="grid-column: 1 / -1; display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="servicoImagemCompleta" />
+              Mostrar imagem completa
+            </label>
+            <div class="image-crop-controls" style="grid-column: 1 / -1;">
+              <div class="control-row">
+                <label class="hint" for="servicoZoom">Zoom</label>
+                <input id="servicoZoom" type="range" min="50" max="220" value="100" />
+              </div>
+              <div class="control-row">
+                <label class="hint" for="servicoPosX">Horizontal</label>
+                <input id="servicoPosX" type="range" min="-500" max="500" value="0" />
+              </div>
+              <div class="control-row">
+                <label class="hint" for="servicoPosY">Vertical</label>
+                <input id="servicoPosY" type="range" min="-500" max="500" value="0" />
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-magenta" data-preview-target="servico"
+              style="grid-column: 1 / -1;">Pré-visualizar enquadramento</button>
+            <div class="image-crop-preview is-hidden" style="grid-column: 1 / -1;">
+              <div class="preview-caption">Pré-visualização</div>
+              <img id="servicoFotoPreviewBlur" class="service-image-blur" alt="Background" />
+              <img id="servicoFotoPreview" alt="Pré-visualização" />
+            </div>
+            <button type="submit" class="btn btn-neon-magenta">Salvar serviço</button>
+          </form>
+          <div id="servicosAdminList" class="service-grid"></div>
+        </section>
+
+        <section id="barbeiros" class="table-card">
+          <div class="section-heading">
+            <h3>Barbeiros cadastrados</h3>
+          </div>
+          <form id="formBarbeiro" class="admin-form">
+            <input type="hidden" id="barbeiroId" />
+            <input id="barbeiroNome" placeholder="Nome do barbeiro" required />
+            <input id="barbeiroEspecialidade" placeholder="Especialidade" required />
+            <input type="hidden" id="barbeiroFotoData" />
+            <input id="barbeiroFoto" type="file" accept="image/*" />
+            <img id="barbeiroFotoPreview" class="service-image" alt="Pré-visualização" style="display:none;" />
+            <button type="submit" class="btn btn-neon-magenta">Salvar barbeiro</button>
+          </form>
+          <div id="barbeirosAdminList" class="service-grid"></div>
+        </section>
+
+        <section id="produtos" class="table-card">
+          <div class="section-heading">
+            <h3>Produtos cadastrados</h3>
+          </div>
+          <form id="formProduto" class="admin-form">
+            <input type="hidden" id="produtoId" />
+            <input id="produtoNome" placeholder="Nome do produto" required />
+            <input id="produtoPreco" type="number" min="0" placeholder="Preço" required />
+            <input type="hidden" id="produtoFotoData" />
+            <input id="produtoFoto" type="file" accept="image/*" />
+            <label class="hint" style="grid-column: 1 / -1; display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="produtoImagemCompleta" />
+              Mostrar imagem completa
+            </label>
+            <div class="image-crop-controls" style="grid-column: 1 / -1;">
+              <div class="control-row">
+                <label class="hint" for="produtoZoom">Zoom</label>
+                <input id="produtoZoom" type="range" min="50" max="220" value="100" />
+              </div>
+              <div class="control-row">
+                <label class="hint" for="produtoPosX">Horizontal</label>
+                <input id="produtoPosX" type="range" min="-500" max="500" value="0" />
+              </div>
+              <div class="control-row">
+                <label class="hint" for="produtoPosY">Vertical</label>
+                <input id="produtoPosY" type="range" min="-500" max="500" value="0" />
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-magenta" data-preview-target="produto"
+              style="grid-column: 1 / -1;">Pré-visualizar enquadramento</button>
+            <div class="image-crop-preview is-hidden" style="grid-column: 1 / -1;">
+              <div class="preview-caption">Pré-visualização</div>
+              <img id="produtoFotoPreviewBlur" class="service-image-blur" alt="Background" />
+              <img id="produtoFotoPreview" alt="Pré-visualização" />
+            </div>
+            <button type="submit" class="btn btn-neon-magenta">Salvar produto</button>
+          </form>
+          <div id="produtosAdminList" class="service-grid"></div>
+        </section>
+
+        <section id="feedbacks" class="table-card">
+          <div class="section-heading">
+            <h3>Feedbacks</h3>
+          </div>
+          <div id="feedbacksAdminList" class="service-grid"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="imagePreviewModal" class="preview-modal" hidden>
+    <div class="preview-modal__backdrop" data-close-preview-modal></div>
+    <div class="preview-modal__dialog" role="dialog" aria-modal="true" aria-label="Pré-visualização do enquadramento">
+      <div class="preview-modal__header">
+        <h3>Pré-visualização do enquadramento</h3>
+        <button type="button" id="closeImagePreviewModal" class="btn btn-secondary">Fechar</button>
+      </div>
+      <p class="hint">A área tracejada mostra exatamente o que ficará visível no card. <strong>Dicas:</strong> Clique e
+        arraste para mover a imagem, role a roda do mouse (scroll) para dar Zoom. (Aumente o Zoom para mover a foto para
+        os lados se ela for muito vertical!)</p>
+      <div class="preview-modal__stage">
+        <div class="preview-modal__frame">
+          <img id="imagePreviewModalImageBlur" class="service-image-blur" alt="Background" />
+          <img id="imagePreviewModalImage" alt="Pré-visualização do enquadramento" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="js/admin.js"></script>
+</body>
+
+</html>

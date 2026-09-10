@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanguard | Cliente</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html">VANGUARD</a>
+        <div class="topbar-actions">
+          <a id="agendarBtn" class="btn btn-neon-magenta" href="cliente.html#agendamento">✂️ Agendar</a>
+          <a class="profile-pill-link" href="cliente.html">
+            <img id="topbarFoto" class="avatar avatar-small" alt="Foto do cliente" />
+            <span id="topbarNome">Cliente</span>
+          </a>
+          <button id="logoutBtn" class="btn btn-secondary">Sair</button>
+        </div>
+      </header>
+
+      <main class="dashboard-grid">
+        <section class="section-card profile-card">
+          <div class="profile-head">
+            <img id="perfilFoto" class="avatar" alt="Foto do cliente" />
+            <div>
+              <h2 id="perfilNome">Carregando...</h2>
+              <p id="perfilInfo"></p>
+            </div>
+          </div>
+          <label class="upload-label" for="fotoInput">Trocar foto</label>
+          <input type="file" id="fotoInput" accept="image/*" />
+          <div class="profile-meta">
+            <p><strong>CPF:</strong> <span id="perfilCpf"></span></p>
+            <p><strong>WhatsApp:</strong> <span id="perfilWhatsapp"></span></p>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-heading">
+            <p class="eyebrow">Loja</p>
+            <h3>Nossos Produtos</h3>
+          </div>
+          <div id="produtosList" class="service-grid">
+            <p class="hint">Carregando produtos...</p>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-heading">
+            <p class="eyebrow">Serviços</p>
+            <h3>Nossos Serviços</h3>
+          </div>
+          <div id="servicosVitrine" class="service-grid">
+            <p class="hint">Carregando serviços...</p>
+          </div>
+        </section>
+
+        <section class="section-card" id="agendamento">
+          <div class="section-heading">
+            <p class="eyebrow">Agendamento</p>
+            <h3>Horários disponíveis</h3>
+          </div>
+          <div class="filters">
+            <select id="servicoSelect"></select>
+            <select id="barbeiroSelect"></select>
+          </div>
+          <div id="slots" class="slots-grid"></div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-heading">
+            <p class="eyebrow">Seus compromissos</p>
+            <h3>Agendamentos feitos</h3>
+          </div>
+          <div id="agendamentosList" class="list"></div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-heading">
+            <p class="eyebrow">Feedback</p>
+            <h3>Deixe sua avaliação</h3>
+          </div>
+          <form id="formFeedback">
+            <select id="feedbackBarbeiro" required></select>
+            <select id="feedbackNota" required>
+              <option value="5">5 - Excelente</option>
+              <option value="4">4 - Muito bom</option>
+              <option value="3">3 - Bom</option>
+              <option value="2">2 - Regular</option>
+              <option value="1">1 - Ruim</option>
+            </select>
+            <textarea id="feedbackComentario" rows="4" placeholder="Conte como foi sua experiência" required></textarea>
+            <button type="submit" class="btn btn-primary">Enviar feedback</button>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    
+    <script src="js/cliente.js"></script>
+  </body>
+</html>
