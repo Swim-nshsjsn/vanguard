@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanguard | Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="dashboard-page">
+      <div class="dashboard-shell">
+        <aside class="sidebar">
+          <a class="brand" href="index.html">VANGUARD</a>
+          <nav>
+            <a class="active" href="#agenda">Agenda</a>
+            <a href="#perfil">Meu Perfil</a>
+            <a href="#avaliar">Avaliar Barbeiro</a>
+            <a href="login.html">Sair</a>
+          </nav>
+        </aside>
+
+        <main class="dashboard-main">
+          <header class="dashboard-header">
+            <div>
+              <p class="eyebrow">Painel do cliente</p>
+              <h1>Olá, Lucas!</h1>
+            </div>
+            <div class="profile-pill">
+              <img class="avatar" src="https://i.pravatar.cc/100?img=12" alt="Avatar" />
+              <span>Lucas</span>
+            </div>
+          </header>
+
+          <section id="agenda" class="table-card">
+            <div class="section-heading">
+              <h3>Calendário anti-conflito</h3>
+            </div>
+            <div class="calendar-grid">
+              <button class="time-slot" disabled>09:00</button>
+              <button class="time-slot">10:00</button>
+              <button class="time-slot">11:00</button>
+              <button class="time-slot">13:00</button>
+              <button class="time-slot">15:00</button>
+              <button class="time-slot" disabled>16:00</button>
+              <button class="time-slot">17:00</button>
+              <button class="time-slot">18:00</button>
+              <button class="time-slot">19:00</button>
+              <button class="time-slot">20:00</button>
+            </div>
+          </section>
+
+          <section id="perfil" class="table-card profile-card">
+            <img class="avatar" src="https://i.pravatar.cc/120?img=12" alt="Meu perfil" />
+            <div>
+              <h3>Meu Perfil</h3>
+              <p>Troque sua foto e mantenha os dados atualizados.</p>
+              <a class="btn btn-outline-magenta" href="#">Trocar foto</a>
+            </div>
+          </section>
+
+          <section id="avaliar" class="table-card">
+            <div class="section-heading">
+              <h3>Avaliar barbeiro</h3>
+            </div>
+            <div class="avatar-selector">
+              <img class="avatar-option active" src="https://i.pravatar.cc/80?img=15" alt="Rafael" />
+              <img class="avatar-option" src="https://i.pravatar.cc/80?img=16" alt="Mika" />
+              <img class="avatar-option" src="https://i.pravatar.cc/80?img=17" alt="Júlia" />
+            </div>
+            <form>
+              <textarea placeholder="Escreva seu feedback para o barbeiro..."></textarea>
+              <button class="btn btn-neon-magenta" type="submit">Enviar feedback</button>
+            </form>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
