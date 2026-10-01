@@ -1117,3 +1117,41 @@ select option {
 
 
 
+
+/* ── Seção História ───────────────────────── */
+.historia-content {
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.historia-content p {
+  margin-bottom: 24px;
+}
+.historia-subtitle {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-top: 48px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.historia-quote {
+  font-size: 1.25rem;
+  font-style: italic;
+  padding: 24px;
+  margin: 32px 0;
+  background: var(--panel-2);
+  border-left: 4px solid;
+  color: #fff;
+  border-radius: 0 12px 12px 0;
+}
+.historia-conclusion {
+  font-size: 1.5rem;
+  color: var(--neon-cyan);
+  text-align: center;
+  margin-top: 48px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
