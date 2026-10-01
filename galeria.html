@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro | Vanguard Barber</title>
+  <title>Galeria | Vanguard Barber</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
@@ -16,25 +16,22 @@
       <a href="../index.html">Início</a>
       <a href="sobre.html">Sobre</a>
       <a href="servicos.html">Serviços</a>
-      <a href="galeria.html">Galeria</a>
+      <a href="galeria.html" class="active">Galeria</a>
       <a href="contato.html">Contato</a>
     </nav>
     <div class="header-actions">
+      <a href="cadastro.html" class="btn btn-ghost">CADASTRO</a>
       <a href="login.html" class="btn btn-primary">LOGIN</a>
     </div>
   </header>
 
   <main class="page-shell">
-    <section class="auth-card card reveal">
-      <h2>Cadastro</h2>
-      <form id="registerForm" class="auth-form">
-        <input type="text" id="name" placeholder="Nome completo" required />
-        <input type="email" id="email" placeholder="E-mail" required />
-        <input type="password" id="password" placeholder="Senha" required />
-        <input type="tel" id="phone" placeholder="Telefone" required />
-        <button type="submit" class="btn btn-primary">CRIAR CONTA</button>
-      </form>
-      <p id="registerMessage" class="message"></p>
+    <section class="card reveal">
+      <h2>Galeria premium</h2>
+      <div class="gallery-grid">
+        <article class="gallery-card"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" alt="Cliente com corte premium" /></article>
+        <article class="gallery-card"><img src="https://images.unsplash.com/photo-1487412912498-0447578fcca8?auto=format&fit=crop&w=600&q=80" alt="Barba designer" /></article>
+      </div>
     </section>
   </main>
 

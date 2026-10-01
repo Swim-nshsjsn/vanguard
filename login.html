@@ -1,31 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanguard | Login</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <div class="auth-shell">
-      <div class="auth-card neon-border-pink">
-        <p class="eyebrow">Acesso exclusivo</p>
-        <h2>Entrar</h2>
-        <p>Use seu WhatsApp e senha para acessar o painel do cliente.</p>
-        <form id="formLogin">
-          <input type="text" id="loginWhats" placeholder="WhatsApp" required />
-          <input type="password" id="loginSenha" placeholder="Senha" required />
-          <button type="submit" class="btn btn-neon-magenta">Entrar</button>
-        </form>
-        <p class="auth-link">
-          Ainda não tem conta?
-          <a href="cadastro.html">Cadastre-se</a>
-        </p>
-        <p class="hint">Admin: WhatsApp <strong>admin</strong> · senha <strong>admin123</strong></p>
-      </div>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Vanguard Barber</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo-wrap"><a href="../index.html" class="logo">VANGUARD</a></div>
+    <nav class="nav-links">
+      <a href="../index.html">Início</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="galeria.html">Galeria</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+    <div class="header-actions">
+      <a href="cadastro.html" class="btn btn-ghost">CADASTRO</a>
     </div>
+  </header>
 
-    
-    <script src="js/auth.js"></script>
-  </body>
+  <main class="page-shell">
+    <section class="auth-card card reveal">
+      <h2>Login</h2>
+      <form id="loginForm" class="auth-form">
+        <input type="email" id="loginEmail" placeholder="E-mail" required />
+        <input type="password" id="loginPassword" placeholder="Senha" required />
+        <button type="submit" class="btn btn-primary">ENTRAR</button>
+      </form>
+      <p id="loginMessage" class="message"></p>
+    </section>
+  </main>
+
+  <script src="../script.js"></script>
+</body>
 </html>

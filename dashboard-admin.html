@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin | Vanguard Barber</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar card">
+      <h2 class="logo">VANGUARD</h2>
+      <nav class="sidebar-nav">
+        <a href="#">Serviços</a>
+        <a href="#">Agendamentos</a>
+        <a href="#">Galeria</a>
+        <a href="#">Barbeiros</a>
+        <a href="#">Horários</a>
+      </nav>
+    </aside>
+    <main class="dashboard-main">
+      <header class="dashboard-header card">
+        <div>
+          <p class="eyebrow">PAINEL ADMIN</p>
+          <h1>Gestão total da barbearia</h1>
+        </div>
+      </header>
+
+      <section class="card reveal">
+        <h3>Gerenciar serviços</h3>
+        <form id="serviceForm" class="auth-form">
+          <input type="text" id="serviceName" placeholder="Nome do serviço" required />
+          <input type="number" id="servicePrice" placeholder="Preço" required />
+          <input type="text" id="serviceImage" placeholder="URL da imagem" />
+          <label><input type="checkbox" id="serviceCombo" /> Combo</label>
+          <button class="btn btn-primary" type="submit">SALVAR</button>
+        </form>
+      </section>
+
+      <section class="card reveal">
+        <h3>Galeria</h3>
+        <form id="galleryForm" class="auth-form">
+          <input type="text" id="galleryImage" placeholder="URL da imagem" required />
+          <input type="text" id="galleryTitle" placeholder="Nome do corte" required />
+          <textarea id="galleryDescription" placeholder="Descrição"></textarea>
+          <button class="btn btn-primary" type="submit">PUBLICAR</button>
+        </form>
+      </section>
+
+      <section class="card reveal">
+        <h3>Barbeiros</h3>
+        <form id="barberForm" class="auth-form">
+          <input type="text" id="barberName" placeholder="Nome" required />
+          <input type="text" id="barberSpecialty" placeholder="Especialidade" required />
+          <input type="text" id="barberPhoto" placeholder="URL da foto" />
+          <button class="btn btn-primary" type="submit">CADASTRAR</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

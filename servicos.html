@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro | Vanguard Barber</title>
+  <title>Serviços | Vanguard Barber</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
@@ -15,26 +15,31 @@
     <nav class="nav-links">
       <a href="../index.html">Início</a>
       <a href="sobre.html">Sobre</a>
-      <a href="servicos.html">Serviços</a>
+      <a href="servicos.html" class="active">Serviços</a>
       <a href="galeria.html">Galeria</a>
       <a href="contato.html">Contato</a>
     </nav>
     <div class="header-actions">
+      <a href="cadastro.html" class="btn btn-ghost">CADASTRO</a>
       <a href="login.html" class="btn btn-primary">LOGIN</a>
     </div>
   </header>
 
   <main class="page-shell">
-    <section class="auth-card card reveal">
-      <h2>Cadastro</h2>
-      <form id="registerForm" class="auth-form">
-        <input type="text" id="name" placeholder="Nome completo" required />
-        <input type="email" id="email" placeholder="E-mail" required />
-        <input type="password" id="password" placeholder="Senha" required />
-        <input type="tel" id="phone" placeholder="Telefone" required />
-        <button type="submit" class="btn btn-primary">CRIAR CONTA</button>
-      </form>
-      <p id="registerMessage" class="message"></p>
+    <section class="card reveal">
+      <h2>Serviços premium</h2>
+      <div class="service-list">
+        <article class="service-card">
+          <h3>Corte Premium</h3>
+          <p>Estilo urbano, acabamento impecável e visual impactante.</p>
+          <span>R$ 90</span>
+        </article>
+        <article class="service-card">
+          <h3>Barba Designer</h3>
+          <p>Modelagem precisa com acabamento de alta performance.</p>
+          <span>R$ 70</span>
+        </article>
+      </div>
     </section>
   </main>
 

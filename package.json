@@ -1,0 +1,15 @@
+{
+  "name": "barber-vanguard",
+  "version": "1.0.0",
+  "description": "Barbearia premium cyberpunk com autenticação e agendamento",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.0",
+    "jsonwebtoken": "^9.0.1",
+    "bcryptjs": "^2.4.0",
+    "cors": "^2.8.0"
+  }
+}
