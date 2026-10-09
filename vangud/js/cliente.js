@@ -49,6 +49,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (el("perfilInfo")) el("perfilInfo").textContent = "Cliente VIP";
     if (el("perfilCpf")) el("perfilCpf").textContent = usuario.cpf;
     if (el("perfilWhatsapp")) el("perfilWhatsapp").textContent = usuario.whatsapp;
+    if (el("infoWhatsapp")) el("infoWhatsapp").textContent = usuario.whatsapp;
+    if (el("perfilEmail")) el("perfilEmail").textContent = usuario.email || "Não informado";
     if (el("perfilFoto")) el("perfilFoto").src = foto;
     if (el("topbarFoto")) el("topbarFoto").src = foto;
     if (el("topbarNome")) el("topbarNome").textContent = usuario.nome;
@@ -125,6 +127,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!el) return;
     const todos = await api.get("agendamentos");
     const meus = todos.filter(ag => ag.whatsapp === usuario.whatsapp);
+    const resumoAg = document.getElementById("resumoAgendamentos");
+    if (resumoAg) resumoAg.textContent = meus.length;
 
     if (!meus.length) {
       el.innerHTML = `<p class="hint">Você ainda não tem agendamentos.</p>`;

@@ -272,3 +272,115 @@ h2, .hero-content p {
   border-color: var(--neon-cyan);
   box-shadow: 0 0 20px rgba(0,242,254,0.4), inset 0 0 15px rgba(0,242,254,0.1);
 }
+
+/* ── IMAGE CROP & MODAL PREVIEW ── */
+.image-crop-preview {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+  display: block;
+  margin-bottom: 12px;
+}
+.image-crop-preview img.service-image-blur {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  filter: blur(12px) brightness(0.6);
+  z-index: 1;
+}
+.image-crop-preview img.service-image {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 2;
+  transition: transform 0.1s ease-out;
+}
+.service-image--full {
+  object-fit: contain !important;
+}
+.service-image--crop {
+  object-fit: cover !important;
+}
+.preview-caption {
+  position: absolute;
+  bottom: 8px; left: 8px; right: 8px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  z-index: 3;
+  pointer-events: none;
+}
+.crop-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+.control-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.control-row label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.preview-modal {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-modal[hidden] {
+  display: none !important;
+}
+.preview-modal__backdrop {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+}
+.preview-modal__dialog {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-card);
+  border: 1px solid var(--neon-cyan);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 0 40px rgba(0,242,254,0.3);
+}
+.preview-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.preview-modal__stage {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+.preview-modal__frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.preview-modal__frame img {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+}
