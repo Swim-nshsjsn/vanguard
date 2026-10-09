@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const cadastroForm = document.getElementById('formCadastro');
   const loginForm = document.getElementById('formLogin');
 
-  // Remove espaços, traços, parênteses para comparar WhatsApp sem diferença de formato
   function normalizarWhats(w) {
     return (w || '').replace(/[\s\-().+]/g, '').replace(/^55/, '');
   }
@@ -12,11 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const headers = {
     'apikey': SUPABASE_KEY,
     'Authorization': `Bearer ${SUPABASE_KEY}`,
-    'Content-Type': 'application/json',
-    'Prefer': 'return=representation'
+    'Content-Type': 'application/json'
   };
 
-  // ── CADASTRO ─────────────────────────────────────────
+  // -- CADASTRO --
   if (cadastroForm) {
     cadastroForm.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -26,14 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
       btnSubmit.textContent = 'Salvando...';
 
       try {
-        // Coleta os dados do formulário
         const nome     = document.getElementById('nome').value.trim();
         const cpf      = document.getElementById('cpf').value.trim();
         const whatsapp = document.getElementById('whatsapp').value.trim();
         const email    = document.getElementById('email')?.value?.trim() || '';
-        const senha    = document.getElementById('senha').value;
+        const senha    = document.getElementById('cadSenha') ? document.getElementById('cadSenha').value : document.getElementById('senha').value;
 
-        // Verifica se WhatsApp já existe
         const resGet   = await fetch(`${SUPABASE_URL}/usuarios?select=whatsapp`, { headers });
         const usuarios = await resGet.json();
         if (usuarios.some((u) => u.whatsapp === whatsapp)) {
@@ -43,44 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        // Payload para o banco (sem email pois a coluna ainda não existe)
         const payload = { nome, cpf, whatsapp, senha, foto: '', admin: false };
 
         const resPost = await fetch(`${SUPABASE_URL}/usuarios`, {
           method: 'POST',
-          headers,
+          headers: { ...headers, 'Prefer': 'return=representation' },
           body: JSON.stringify(payload)
         });
 
-        // Verifica se o cadastro realmente funcionou
         if (!resPost.ok) {
           const errBody = await resPost.json();
           throw new Error(errBody.message || `Erro HTTP ${resPost.status}`);
         }
 
-        const usuarioCriado = (await resPost.json())[0];
-        localStorage.setItem('logado', JSON.stringify(usuarioCriado));
+        // Salva os dados na memoria rapida para preencher o login automaticamente
+        sessionStorage.setItem('prefillWhats', whatsapp);
+        sessionStorage.setItem('prefillSenha', senha);
 
-        // Mostra tela de sucesso com todos os dados preenchidos
-        const formContainer = document.querySelector('.auth-card');
-        formContainer.innerHTML = `
-          <p class="eyebrow" style="color: #00ffff;">Sucesso!</p>
-          <h2>Cadastro Realizado</h2>
-          <p style="margin-bottom: 24px;">Sua conta foi criada! Anote seus dados de acesso:</p>
-          <div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: left; font-size: 0.95rem; line-height: 2;">
-            <p>&#128100; <strong>Nome:</strong> ${nome}</p>
-            <p>&#128231; <strong>E-mail:</strong> ${email || '&mdash;'}</p>
-            <p>&#128241; <strong>WhatsApp:</strong> ${whatsapp}</p>
-            <p>&#128219; <strong>CPF:</strong> ${cpf}</p>
-            <p>&#128273; <strong>Senha:</strong> ${senha}</p>
-          </div>
-          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 20px;">
-            Guarde esses dados! Voce vai precisar do <strong>WhatsApp</strong> e da <strong>senha</strong> para entrar.
-          </p>
-          <a href="login.html" class="btn btn-neon-magenta" style="width: 100%; display: block; text-align: center;">
-            IR PARA O LOGIN
-          </a>
-        `;
+        // Vai para a tela de login
+        window.location.href = 'login.html';
 
       } catch (e) {
         console.error('[auth.js] Erro ao cadastrar:', e);
@@ -91,8 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── LOGIN ─────────────────────────────────────────────
+  // -- LOGIN --
   if (loginForm) {
+    // Preenche automaticamente se o usuario acabou de se cadastrar
+    const prefillWhats = sessionStorage.getItem('prefillWhats');
+    const prefillSenha = sessionStorage.getItem('prefillSenha');
+    
+    if (prefillWhats && document.getElementById('loginWhats')) {
+      document.getElementById('loginWhats').value = prefillWhats;
+      sessionStorage.removeItem('prefillWhats');
+    }
+    if (prefillSenha && document.getElementById('loginSenha')) {
+      document.getElementById('loginSenha').value = prefillSenha;
+      sessionStorage.removeItem('prefillSenha');
+    }
+
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
 
@@ -112,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
         if (!usuario) {
-          alert('WhatsApp ou senha invalidos. Verifique os dados e tente novamente.');
+          alert('WhatsApp ou senha inválidos. Verifique os dados e tente novamente.');
           btnSubmit.disabled = false;
           btnSubmit.textContent = 'Entrar';
           return;

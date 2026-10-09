@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const closePreviewBtn   = document.getElementById('closeImagePreviewModal');
   const logoutBtn         = document.getElementById('logoutBtn');
   const clientesList      = document.getElementById('clientesList');
-  const agendaList        = document.getElementById('agendaList');
+  const agendaList        = document.getElementById('agendamentosAdminList');
   const servicosAdminList = document.getElementById('servicosAdminList');
   const barbeirosAdminList = document.getElementById('barbeirosAdminList');
   const produtosAdminList  = document.getElementById('produtosAdminList');
@@ -506,17 +506,92 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Render functions ─────────────────────────────────
   async function renderClientes() {
     const usuarios = await api.get('usuarios');
-    clientesList.innerHTML = usuarios
-      .filter(u => !u.admin)
-      .map(u => `<article class="card"><h3>${u.nome}</h3><p>${u.whatsapp}</p><p>${u.cpf}</p></article>`)
-      .join('');
+    const clientes = usuarios.filter(u => !u.admin);
+    if (!clientes.length) {
+      clientesList.innerHTML = '<p class="hint">Nenhum cliente cadastrado.</p>';
+      return;
+    }
+    clientesList.innerHTML = `
+      <table style="width:100%; border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">Nome</th>
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">WhatsApp</th>
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">CPF</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${clientes.map(u => `
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 12px 8px; display: flex; align-items: center; gap: 12px;">
+                ${u.foto ? `<img src="${u.foto}" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--neon-magenta);" />` : `<div style="width: 36px; height: 36px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0;">${u.nome.charAt(0).toUpperCase()}</div>`}
+                <strong>${u.nome}</strong>
+              </td>
+              <td style="padding: 12px 8px; color: var(--text-muted);">${u.whatsapp}</td>
+              <td style="padding: 12px 8px; color: var(--text-muted);">${u.cpf}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
   }
 
   async function renderAgenda() {
-    const agendamentos = await api.get('agendamentos');
-    agendaList.innerHTML = agendamentos.length
-      ? agendamentos.map(a => `<article class="card"><h3>${a.data}</h3><p>${a.hora}</p><p>${a.cliente}</p></article>`).join('')
-      : '<p class="hint">Nenhum agendamento ainda.</p>';
+    const [agendamentos, servicos, barbeiros] = await Promise.all([
+      api.get('agendamentos'),
+      api.get('servicos'),
+      api.get('barbeiros')
+    ]);
+
+    if (!agendamentos.length) {
+      agendaList.innerHTML = '<p class="hint">Nenhum agendamento ainda.</p>';
+      return;
+    }
+
+    // Ordena por data e hora (mais recente primeiro)
+    agendamentos.sort((a, b) => (a.data + a.hora).localeCompare(b.data + b.hora));
+
+    agendaList.innerHTML = `
+      <table style="width:100%; border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--border-color); text-align: left;">
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">Horário</th>
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">Cliente</th>
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">WhatsApp</th>
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">Serviço</th>
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">Barbeiro</th>
+            <th style="padding: 12px 8px; color: var(--text-muted); font-size: 0.85rem;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${agendamentos.map(a => {
+            const serv = servicos.find(s => s.id == a.servicoId);
+            const barb = barbeiros.find(b => b.id == a.barbeiroId);
+            const hoje = new Date().toISOString().split('T')[0];
+            const isPast = a.data < hoje;
+            const isToday = a.data === hoje;
+            const statusLabel = isPast ? 'Concluído' : (isToday ? 'Hoje' : 'Agendado');
+            const statusColor = isPast ? '#00ff80' : (isToday ? '#ffa500' : 'var(--neon-cyan)');
+            const statusBg = isPast ? 'rgba(0,255,128,0.1)' : (isToday ? 'rgba(255,165,0,0.1)' : 'rgba(0,242,254,0.1)');
+            return `
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 12px 8px;">
+                  <strong style="color: var(--neon-magenta);">${a.hora}</strong>
+                  <br><span style="font-size: 0.8rem; color: var(--text-muted);">${a.data.split('-').reverse().join('/')}</span>
+                </td>
+                <td style="padding: 12px 8px;"><strong>${a.cliente}</strong></td>
+                <td style="padding: 12px 8px; color: var(--text-muted);">${a.whatsapp || '—'}</td>
+                <td style="padding: 12px 8px; color: var(--text-muted);">${serv ? serv.nome : '—'}</td>
+                <td style="padding: 12px 8px; color: var(--text-muted);">${barb ? barb.nome : '—'}</td>
+                <td style="padding: 12px 8px;">
+                  <span style="padding: 4px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: ${statusColor}; background: ${statusBg}; border: 1px solid ${statusColor}30;">${statusLabel}</span>
+                </td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    `;
   }
 
   async function renderServicos() {
