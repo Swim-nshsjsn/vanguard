@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanguard | Cadastro</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <a href="index.html" class="btn btn-outline" style="position: absolute; top: 20px; left: 20px;">Voltar</a>
+    <div class="auth-card neon-border-cyan">
+      <p class="eyebrow">Bem-vindo</p>
+      <h2>Criar Conta</h2>
+      <p>Preencha os dados abaixo para fazer parte da Vanguard.</p>
+      <form id="formCadastro">
+        <input type="text" id="nome" placeholder="Nome completo" required />
+        <input type="email" id="email" placeholder="E-mail (opcional)" />
+        <input type="text" id="whatsapp" placeholder="WhatsApp (DDD + N&uacute;mero)" required />
+        <input type="text" id="cpf" placeholder="CPF" required />
+        <div style="position: relative; width: 100%; margin-bottom: 16px;">
+          <input type="password" id="cadSenha" placeholder="Crie uma senha" required style="width: 100%; margin-bottom: 0; padding-right: 48px;" />
+          <button type="button" id="toggleCadSenha" style="position: absolute; right: 12px; top: 16px; background: none; border: none; color: var(--neon-cyan); cursor: pointer; font-size: 0.9rem;">Ver</button>
+        </div>
+        <button type="submit" class="btn btn-neon-magenta" style="width: 100%;">Cadastrar</button>
+      </form>
+      <p class="auth-link" style="margin-top: 16px;">
+        J&aacute; tem uma conta? <a href="login.html">Fa&ccedil;a login</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('toggleCadSenha').addEventListener('click', function() {
+      var input = document.getElementById('cadSenha');
+      if (input.type === 'password') {
+        input.type = 'text';
+        this.textContent = 'Ocultar';
+      } else {
+        input.type = 'password';
+        this.textContent = 'Ver';
+      }
+    });
+  </script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

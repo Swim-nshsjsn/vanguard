@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanguard | Cliente</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="dashboard-page">
+    <div class="dashboard-shell">
+      
+      <!-- SIDEBAR DO CLIENTE -->
+      <aside class="sidebar">
+        <a class="brand" href="index.html">VANGUARD</a>
+        <nav>
+          <a class="active" href="#">👤 Meu Perfil</a>
+          <a href="#agendamento">📅 Agendamentos</a>
+          <a href="#feedbacks">⭐ Avaliações</a>
+          <a href="index.html">🏠 Voltar ao Início</a>
+          <button id="logoutBtn" class="btn btn-outline" style="margin-top: auto;">Sair</button>
+        </nav>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="dashboard-main">
+        <header class="dashboard-header" style="justify-content: flex-end;">
+          <div class="header-actions">
+            <a href="#agendamento" class="btn btn-neon-magenta">📅 Agendar</a>
+            <div class="header-profile">
+              <img id="topbarFoto" src="https://via.placeholder.com/40" alt="Cliente" />
+            </div>
+          </div>
+        </header>
+
+        <!-- BANNER CLIENTE -->
+        <section class="client-banner" style="display: flex; gap: 32px; align-items: center;">
+          <div style="position: relative;">
+            <img id="perfilFoto" src="https://via.placeholder.com/150" style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--neon-magenta); box-shadow: 0 0 30px rgba(255,8,68,0.3); object-fit: cover;" />
+            <label for="fotoInput" style="position: absolute; bottom: 0; right: 0; background: var(--bg-card); border-radius: 50%; padding: 8px; cursor: pointer; border: 1px solid var(--neon-magenta);">✏️</label>
+            <input type="file" id="fotoInput" style="display: none;" accept="image/*" />
+          </div>
+          <div style="flex: 1;">
+            <h1 id="perfilNome" style="font-size: 2.5rem; margin-bottom: 8px; color: #fff;">Carregando...</h1>
+            <p style="color: var(--text-muted); display: flex; gap: 8px; align-items: center;"><span style="color: var(--neon-cyan);">📧</span> <span id="perfilEmail">—</span></p>
+            <p style="color: var(--text-muted); display: flex; gap: 8px; align-items: center; margin-top: 4px;"><span style="color: var(--neon-cyan);">📞</span> <span id="perfilWhatsapp">—</span></p>
+            <span class="badge" style="background: rgba(255,8,68,0.2); color: var(--neon-magenta); margin-top: 16px; display: inline-block;">👑 Cliente VIP</span>
+          </div>
+          
+          <!-- RESUMO CARD -->
+          <div class="metric-card" style="width: 300px; background: rgba(0,0,0,0.5);">
+            <h4 style="color: var(--text-muted); margin-bottom: 16px; font-weight: 500;">SEU RESUMO</h4>
+            <div style="display: flex; justify-content: space-between;">
+              <div style="text-align: center;">
+                <strong style="color: #fff; font-size: 1.5rem;" id="resumoAgendamentos">0</strong>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">Agendamentos</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTEÚDO INFERIOR -->
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
+          
+          <!-- INFORMAÇÕES PESSOAIS -->
+          <section class="section-card" style="margin: 0;">
+            <h3 style="margin-bottom: 24px;">👤 INFORMAÇÕES PESSOAIS</h3>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                <span style="color: var(--text-muted);">CPF</span>
+                <span id="perfilCpf" style="color: #fff;"></span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                <span style="color: var(--text-muted);">Telefone</span>
+                <span id="infoWhatsapp" style="color: #fff;"></span>
+              </div>
+            </div>
+          </section>
+
+          <!-- AGENDAR / SLOTS -->
+          <section id="agendamento" class="section-card" style="margin: 0;">
+            <h3 style="margin-bottom: 24px;">📅 NOVO AGENDAMENTO</h3>
+            <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+              <select id="servicoSelect" style="flex: 1;"></select>
+              <select id="barbeiroSelect" style="flex: 1;"></select>
+            </div>
+            <div id="slots" class="slots-grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));"></div>
+          </section>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <!-- ÚLTIMOS AGENDAMENTOS -->
+          <section id="agendamentos" class="section-card">
+            <h3 style="margin-bottom: 24px;">📅 SEUS AGENDAMENTOS</h3>
+            <div id="agendamentosList"></div>
+          </section>
+
+          <!-- DEIXAR FEEDBACK -->
+          <section id="feedbacks" class="section-card">
+            <h3 style="margin-bottom: 24px;">⭐ AVALIAR</h3>
+            <form id="formFeedback">
+              <select id="feedbackBarbeiro" required></select>
+              <select id="feedbackNota" required>
+                <option value="5">5 - Excelente</option>
+                <option value="4">4 - Muito bom</option>
+                <option value="3">3 - Bom</option>
+                <option value="2">2 - Regular</option>
+                <option value="1">1 - Ruim</option>
+              </select>
+              <textarea id="feedbackComentario" rows="3" placeholder="Conte como foi sua experiência" required></textarea>
+              <button type="submit" class="btn btn-neon-cyan" style="width: 100%;">Enviar Avaliação</button>
+            </form>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/cliente.js"></script>
+</body>
+</html>

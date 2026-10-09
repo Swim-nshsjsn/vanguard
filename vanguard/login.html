@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanguard | Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <a href="index.html" class="btn btn-outline" style="position: absolute; top: 20px; left: 20px;">Voltar</a>
+    <div class="auth-card neon-border-pink">
+      <p class="eyebrow">Acesso exclusivo</p>
+      <h2>Entrar</h2>
+      <p>Use seu WhatsApp e senha para acessar o painel do cliente.</p>
+      <form id="formLogin">
+        <input type="text" id="loginWhats" placeholder="WhatsApp" required />
+        <div style="position: relative; width: 100%; margin-bottom: 16px;">
+          <input type="password" id="loginSenha" placeholder="Senha" required style="width: 100%; margin-bottom: 0; padding-right: 48px;" />
+          <button type="button" id="toggleLoginSenha" style="position: absolute; right: 12px; top: 16px; background: none; border: none; color: var(--neon-cyan); cursor: pointer; font-size: 0.9rem;">Ver</button>
+        </div>
+        <button type="submit" class="btn btn-neon-magenta" style="width: 100%;">Entrar</button>
+      </form>
+      <p class="auth-link" style="margin-top: 16px;">
+        Ainda n&atilde;o tem conta?
+        <a href="cadastro.html">Cadastre-se</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('toggleLoginSenha').addEventListener('click', function() {
+      var input = document.getElementById('loginSenha');
+      if (input.type === 'password') {
+        input.type = 'text';
+        this.textContent = 'Ocultar';
+      } else {
+        input.type = 'password';
+        this.textContent = 'Ver';
+      }
+    });
+  </script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

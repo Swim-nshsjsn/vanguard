@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanguard | Barbearia Premium</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a id="brandLink" class="brand" href="index.html">VANGUARD</a>
+      <nav class="nav-links">
+        <a href="#inicio">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#feedbacks">Feedbacks</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#historia">Sobre</a>
+      </nav>
+      <div id="topbarActions" class="topbar-actions">
+        <a id="heroPrimaryCta" class="btn btn-outline" href="login.html">LOGIN</a>
+        <a class="btn btn-neon-magenta" href="cadastro.html">AGENDAR</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section id="inicio" class="hero-split">
+        <div class="hero-content">
+          <p style="color: var(--neon-cyan); letter-spacing: 2px; font-weight: 600; margin-bottom: 16px;">BARBEARIA PREMIUM</p>
+          <h1>CORTES MODERNOS COM ENERGIA DE <span>NEON.</span></h1>
+          <p>Mais que um corte, é um estilo de vida. Precisão, atendimento premium e uma experiência feita para você.</p>
+          <div style="display: flex; gap: 24px; align-items: center;">
+            <a class="btn btn-neon-magenta" href="cadastro.html">AGENDAR HORÁRIO</a>
+            <a href="#historia" style="font-weight: 500; display: flex; align-items: center; gap: 8px;">
+              <span style="display: flex; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-color); align-items: center; justify-content: center;">▶</span>
+              Conheça a Vanguard
+            </a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=2070" alt="Modelo Cyberpunk" />
+        </div>
+      </section>
+
+      <!-- SERVIÇOS -->
+      <section id="servicos" class="section-split">
+        <div class="section-split-title">
+          <p style="color: var(--neon-cyan); font-weight: 600; margin-bottom: 8px;">NOSSOS SERVIÇOS</p>
+          <h2>CORTE, ESTILO E ATITUDE.</h2>
+          <p>Do clássico ao moderno, o corte certo para cada personalidade.</p>
+        </div>
+        <div id="servicosList" class="service-grid">
+          <p class="hint" id="servicosLoading">Carregando serviços...</p>
+        </div>
+      </section>
+
+      <!-- GALERIA -->
+      <section id="galeria" class="section-split" style="background: var(--bg-panel);">
+        <div class="section-split-title">
+          <p style="color: var(--neon-cyan); font-weight: 600; margin-bottom: 8px;">GALERIA</p>
+          <h2>ESTILO QUE CHAMA ATENÇÃO.</h2>
+          <p>Cada corte conta uma história. Confira alguns dos nossos trabalhos.</p>
+        </div>
+        <div id="galeriaList" class="gallery-grid">
+          <p class="hint" id="galeriaLoading">Carregando galeria...</p>
+        </div>
+      </section>
+
+      <!-- FEEDBACKS -->
+      <section id="feedbacks" class="section-split">
+        <div class="section-split-title">
+          <p style="color: var(--neon-cyan); font-weight: 600; margin-bottom: 8px;">FEEDBACKS DE CLIENTES</p>
+          <h2>QUEM JÁ VIVEU, RECOMENDA.</h2>
+          <p>A confiança dos nossos clientes é o que nos move todos os dias.</p>
+        </div>
+        <div id="feedbacksList" class="feedback-grid">
+          <!-- preenchido via JS -->
+        </div>
+      </section>
+
+      <!-- HISTORIA -->
+      <section id="historia" class="section-split" style="background: var(--bg-panel);">
+        <div class="hero-image" style="height: 600px;">
+          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2074" alt="Barbearia Vanguard" />
+        </div>
+        <div class="historia-content">
+          <p style="color: var(--neon-cyan); font-weight: 600; margin-bottom: 8px;">NOSSA ESSÊNCIA</p>
+          <h2 style="font-size: 3rem; color: #fff; line-height: 1.1; margin-bottom: 24px;">A ORIGEM DA VANGUARD</h2>
+          <p>Durante séculos, o ofício de barbeiro foi muito mais do que aquilo que conhecemos hoje.</p>
+          <p>Antes das barbearias modernas, quando lâminas eram ferramentas tanto de cuidado quanto de precisão, existiam homens conhecidos como <strong>barbeiros-cirurgiões</strong>.</p>
+          <p>Hoje, a Vanguard resgata essa essência, unindo tradição, estilo e tecnologia para oferecer a você uma experiência única.</p>
+          <blockquote class="historia-quote">
+            "Um barbeiro não trabalha apenas com cabelos. Trabalha com aquilo que um homem escolhe mostrar ao mundo."
+          </blockquote>
+          <p style="font-size: 1.2rem; font-weight: bold; color: var(--neon-cyan);">VANGUARD — tradição de precisão.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const loggedUser = JSON.parse(localStorage.getItem('logado') || 'null');
+    const topbarActions = document.getElementById('topbarActions');
+    const brandLink = document.getElementById('brandLink');
+    if (brandLink) brandLink.href = loggedUser && !loggedUser.admin ? 'cliente.html' : 'index.html';
+    
+    if (topbarActions && loggedUser) {
+      if (!loggedUser.admin) {
+        topbarActions.innerHTML = `
+          <a class="header-profile" href="cliente.html">
+            <img src="${loggedUser.foto || 'https://via.placeholder.com/40'}" style="width: 40px; height: 40px; border-radius: 50%;" />
+            <span style="color:#fff; font-weight:600;">${loggedUser.nome}</span>
+          </a>
+          <a class="btn btn-neon-magenta" href="cliente.html#agendamento">Agendar</a>
+        `;
+      } else {
+        topbarActions.innerHTML = '<a class="btn btn-outline" href="admin.html">Painel Admin</a>';
+      }
+    }
+
+    const SUPABASE_URL = 'https://pjwrkecbcddnqfajjgjr.supabase.co/rest/v1';
+    const SUPABASE_KEY = 'sb_publishable_oyWF1sCKBgjqQMic7acIUg_HZnXAiSP';
+    const headers = { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` };
+
+    async function carregarServicos() {
+      const el = document.getElementById('servicosList');
+      if (!el) return;
+      try {
+        const res = await fetch(`${SUPABASE_URL}/servicos?select=*`, { headers });
+        const data = await res.json();
+        document.getElementById('servicosLoading')?.remove();
+        el.innerHTML = data.map(s => `
+          <article class="service-card">
+            <div class="img-container">
+              <img src="${s.foto}" alt="${s.nome}" style="object-fit: cover;" />
+            </div>
+            <div class="info">
+              <span style="color: var(--neon-cyan); font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">Corte</span>
+              <h3>${s.nome}</h3>
+              <div class="price-row">
+                <span>R$ ${s.preco}</span>
+                <span style="color: var(--text-muted); font-size: 0.9rem; font-weight: normal;">${s.duracao}</span>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      } catch (e) { console.error(e); }
+    }
+
+    async function carregarGaleria() {
+      const el = document.getElementById('galeriaList');
+      if (!el) return;
+      try {
+        const res = await fetch(`${SUPABASE_URL}/galeria?select=*`, { headers });
+        const data = await res.json();
+        document.getElementById('galeriaLoading')?.remove();
+        el.innerHTML = data.map(g => `
+          <article class="service-card" style="height: 300px;">
+            <div class="img-container" style="height: 200px;">
+              <img src="${g.foto}" style="object-fit: cover;" />
+            </div>
+            <div class="info" style="padding: 16px;">
+              <p style="font-size: 0.9rem; color: var(--text-muted);">${g.descricao}</p>
+            </div>
+          </article>
+        `).join('');
+      } catch (e) { console.error(e); }
+    }
+
+    async function carregarFeedbacks() {
+      const el = document.getElementById('feedbacksList');
+      if (!el) return;
+      try {
+        const res = await fetch(`${SUPABASE_URL}/feedbacks?select=*`, { headers });
+        const data = await res.json();
+        el.innerHTML = data.map((f, i) => `
+          <article class="metric-card ${i % 2 === 0 ? 'magenta' : ''}">
+            <div style="color: #ffaa00; font-size: 1.2rem;">${'★'.repeat(f.nota || 5)}</div>
+            <p style="color: #fff; font-style: italic;">"${f.comentario}"</p>
+            <div style="display: flex; align-items: center; gap: 12px; margin-top: 16px;">
+              <img src="https://i.pravatar.cc/40?img=${i+10}" style="width: 40px; border-radius: 50%;" />
+              <strong style="font-size: 1rem;">${f.cliente}</strong>
+            </div>
+          </article>
+        `).join('');
+      } catch (e) { console.error(e); }
+    }
+
+    carregarServicos();
+    carregarGaleria();
+    carregarFeedbacks();
+  </script>
+</body>
+</html>

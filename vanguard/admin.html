@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanguard | Admin</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="dashboard-page">
+    <div class="dashboard-shell">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <a class="brand" href="index.html">VANGUARD</a>
+        <nav>
+          <a class="active" href="#clientes">👤 Clientes</a>
+          <a href="#agendamentos">📅 Agendamentos</a>
+          <a href="#servicos">✂️ Serviços</a>
+          <a href="#produtos">📦 Produtos</a>
+          <a href="#barbeiros">💈 Barbeiros</a>
+          <a href="#galeria">🖼️ Galeria</a>
+          <a href="#feedbacks">⭐ Feedbacks</a>
+          <button id="logoutBtn" class="btn btn-outline" style="margin-top: auto; width: 100%;">🚪 Sair</button>
+        </nav>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="dashboard-main">
+        <header class="dashboard-header">
+          <input type="text" class="search-bar" placeholder="Buscar clientes, agendamentos..." />
+          <div class="header-actions">
+            <span style="font-size: 1.5rem; cursor: pointer;">🔔</span>
+            <div class="header-profile">
+              <img src="https://i.pravatar.cc/100?img=11" alt="Admin" />
+              <div>
+                <strong style="display: block;">Vanga</strong>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Administrador</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- BANNER E METRICAS -->
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 24px;">
+          <section class="admin-banner">
+            <p style="color: var(--neon-cyan); font-weight: 600; letter-spacing: 2px;">PAINEL ADMINISTRATIVO</p>
+            <h1>CONTROLE TOTAL DA <span>BARBEARIA</span></h1>
+            <p style="color: var(--text-muted); max-width: 400px;">Gerencie clientes, agendamentos, serviços e produtos em um só lugar com tecnologia de ponta.</p>
+          </section>
+          <section class="metrics-grid" style="grid-template-columns: repeat(2, 1fr); min-width: 320px;">
+            <div class="metric-card">
+              <span>Agendamentos Hoje</span>
+              <strong id="metricAgendamentos">—</strong>
+            </div>
+            <div class="metric-card magenta">
+              <span>Clientes</span>
+              <strong id="metricClientes">—</strong>
+            </div>
+            <div class="metric-card">
+              <span>Serviços</span>
+              <strong id="metricServicos">—</strong>
+            </div>
+            <div class="metric-card magenta">
+              <span>Barbeiros</span>
+              <strong id="metricBarbeiros">—</strong>
+            </div>
+            <div class="metric-card" style="grid-column: 1 / -1;">
+              <span>Feedbacks</span>
+              <strong id="metricFeedbacks">—</strong>
+            </div>
+          </section>
+        </div>
+
+        <!-- AGENDAMENTOS E CLIENTES -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+          <!-- AGENDAMENTOS -->
+          <section id="agendamentos" class="section-card" style="margin: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+              <h3>📅 AGENDAMENTOS</h3>
+            </div>
+            <div id="agendamentosAdminList" style="overflow-x: auto;">
+              <p class="hint">Carregando agendamentos...</p>
+            </div>
+          </section>
+
+          <!-- ÚLTIMOS CLIENTES -->
+          <section id="clientes" class="section-card" style="margin: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+              <h3>👤 CLIENTES CADASTRADOS</h3>
+            </div>
+            <div id="clientesList" style="overflow-x: auto;">
+              <p class="hint">Carregando clientes...</p>
+            </div>
+          </section>
+        </div>
+
+        <!-- SERVIÇOS -->
+        <section id="servicos" class="section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h3>✂️ CADASTRAR OU EDITAR SERVIÇO</h3>
+          </div>
+          <form id="formServico" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="hidden" id="servicoId" />
+            <input type="hidden" id="servicoFotoData" />
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px;">
+              <input type="text" id="servicoNome" placeholder="Nome do corte ou serviço" required />
+              <input type="number" id="servicoPreco" placeholder="Preço (R$)" required />
+              <input type="text" id="servicoDuracao" placeholder="Duração (ex: 45 min)" />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: center;">
+              <div>
+                <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Foto do corte</label>
+                <input type="file" id="servicoFoto" accept="image/*" />
+              </div>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem;">
+                <input type="checkbox" id="servicoImagemCompleta" style="width: auto; margin: 0;" /> Foto inteira (sem cortar)
+              </label>
+            </div>
+            <div class="crop-controls">
+              <div class="control-row">
+                <label for="servicoZoom">Zoom</label>
+                <input id="servicoZoom" type="range" min="50" max="220" value="100" />
+              </div>
+              <div class="control-row">
+                <label for="servicoPosX">Posição X</label>
+                <input id="servicoPosX" type="range" min="-150" max="150" value="0" />
+              </div>
+              <div class="control-row">
+                <label for="servicoPosY">Posição Y</label>
+                <input id="servicoPosY" type="range" min="-150" max="150" value="0" />
+              </div>
+              <div style="display: flex; align-items: flex-end;">
+                <button type="button" class="btn btn-outline" data-preview-target="servico" style="width: 100%;">Pré-visualizar</button>
+              </div>
+            </div>
+            <div class="image-crop-preview" style="display: none; height: 180px;">
+              <img class="service-image-blur" id="servicoFotoPreviewBlur" alt="" />
+              <img id="servicoFotoPreview" class="service-image" alt="Preview" />
+            </div>
+            <div>
+              <button type="submit" class="btn btn-neon-magenta">Salvar Serviço</button>
+            </div>
+          </form>
+          <div style="margin-top: 32px;">
+            <h4 style="margin-bottom: 16px; color: var(--text-muted);">Serviços no catálogo</h4>
+            <div id="servicosAdminList" class="service-grid"></div>
+          </div>
+        </section>
+
+        <!-- PRODUTOS -->
+        <section id="produtos" class="section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h3>📦 CADASTRAR OU EDITAR PRODUTO</h3>
+          </div>
+          <form id="formProduto" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="hidden" id="produtoId" />
+            <input type="hidden" id="produtoFotoData" />
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+              <input type="text" id="produtoNome" placeholder="Nome do produto" required />
+              <input type="number" id="produtoPreco" placeholder="Preço (R$)" required />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: center;">
+              <div>
+                <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Foto do produto</label>
+                <input type="file" id="produtoFoto" accept="image/*" />
+              </div>
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem;">
+                <input type="checkbox" id="produtoImagemCompleta" style="width: auto; margin: 0;" /> Foto inteira (sem cortar)
+              </label>
+            </div>
+            <div class="crop-controls">
+              <div class="control-row">
+                <label for="produtoZoom">Zoom</label>
+                <input id="produtoZoom" type="range" min="50" max="220" value="100" />
+              </div>
+              <div class="control-row">
+                <label for="produtoPosX">Posição X</label>
+                <input id="produtoPosX" type="range" min="-150" max="150" value="0" />
+              </div>
+              <div class="control-row">
+                <label for="produtoPosY">Posição Y</label>
+                <input id="produtoPosY" type="range" min="-150" max="150" value="0" />
+              </div>
+              <div style="display: flex; align-items: flex-end;">
+                <button type="button" class="btn btn-outline" data-preview-target="produto" style="width: 100%;">Pré-visualizar</button>
+              </div>
+            </div>
+            <div class="image-crop-preview" style="display: none; height: 180px;">
+              <img class="service-image-blur" id="produtoFotoPreviewBlur" alt="" />
+              <img id="produtoFotoPreview" class="service-image" alt="Preview" />
+            </div>
+            <div>
+              <button type="submit" class="btn btn-neon-magenta">Salvar Produto</button>
+            </div>
+          </form>
+          <div style="margin-top: 32px;">
+            <h4 style="margin-bottom: 16px; color: var(--text-muted);">Produtos na loja</h4>
+            <div id="produtosAdminList" class="service-grid"></div>
+          </div>
+        </section>
+
+        <!-- BARBEIROS -->
+        <section id="barbeiros" class="section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h3>💈 CADASTRAR OU EDITAR BARBEIRO</h3>
+          </div>
+          <form id="formBarbeiro" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="hidden" id="barbeiroId" />
+            <input type="hidden" id="barbeiroFotoData" />
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <input type="text" id="barbeiroNome" placeholder="Nome do barbeiro" required />
+              <input type="text" id="barbeiroEspecialidade" placeholder="Especialidade (ex: Cortes modernos, Barba)" required />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: center;">
+              <div>
+                <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Foto do barbeiro</label>
+                <input type="file" id="barbeiroFoto" accept="image/*" />
+              </div>
+              <div>
+                <img id="barbeiroFotoPreview" style="display: none; width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" />
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-neon-cyan">Salvar Barbeiro</button>
+            </div>
+          </form>
+          <div style="margin-top: 32px;">
+            <h4 style="margin-bottom: 16px; color: var(--text-muted);">Equipe de Barbeiros</h4>
+            <div id="barbeirosAdminList" class="service-grid"></div>
+          </div>
+        </section>
+
+        <!-- GALERIA -->
+        <section id="galeria" class="section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h3>🖼️ GALERIA DE CORTES</h3>
+          </div>
+          <form id="formGaleria" style="display: flex; flex-direction: column; gap: 16px;">
+            <input type="hidden" id="galeriaId" />
+            <input type="hidden" id="galeriaFotoData" />
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 16px; align-items: center;">
+              <div>
+                <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Foto do corte</label>
+                <input type="file" id="galeriaFoto" accept="image/*" />
+              </div>
+              <input type="text" id="galeriaDescricao" placeholder="Descrição do corte (ex: Degradê texturizado com risco)" required />
+            </div>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem;">
+              <input type="checkbox" id="galeriaImagemCompleta" style="width: auto; margin: 0;" /> Recortar imagem (preencher card)
+            </label>
+            <div class="crop-controls">
+              <div class="control-row">
+                <label for="galeriaZoom">Zoom</label>
+                <input id="galeriaZoom" type="range" min="50" max="220" value="100" />
+              </div>
+              <div class="control-row">
+                <label for="galeriaPosX">Posição X</label>
+                <input id="galeriaPosX" type="range" min="-150" max="150" value="0" />
+              </div>
+              <div class="control-row">
+                <label for="galeriaPosY">Posição Y</label>
+                <input id="galeriaPosY" type="range" min="-150" max="150" value="0" />
+              </div>
+              <div style="display: flex; align-items: flex-end;">
+                <button type="button" class="btn btn-outline" data-preview-target="galeria" style="width: 100%;">Pré-visualizar</button>
+              </div>
+            </div>
+            <div class="image-crop-preview" style="display: none; height: 180px;">
+              <img class="service-image-blur" id="galeriaFotoPreviewBlur" alt="" />
+              <img id="galeriaFotoPreview" class="service-image" alt="Preview" />
+            </div>
+            <div>
+              <button type="submit" class="btn btn-neon-cyan">Adicionar à Galeria</button>
+            </div>
+          </form>
+          <div style="margin-top: 32px;">
+            <h4 style="margin-bottom: 16px; color: var(--text-muted);">Fotos na galeria</h4>
+            <div id="galeriaAdminList" class="gallery-grid"></div>
+          </div>
+        </section>
+
+        <!-- FEEDBACKS -->
+        <section id="feedbacks" class="section-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h3>⭐ FEEDBACKS RECEBIDOS</h3>
+          </div>
+          <div id="feedbacksAdminList" class="feedback-grid"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL DE PREVIEW -->
+  <div id="imagePreviewModal" class="preview-modal" hidden>
+    <div class="preview-modal__backdrop" data-close-preview-modal></div>
+    <div class="preview-modal__dialog" role="dialog" aria-modal="true" aria-label="Pré-visualização">
+      <div class="preview-modal__header">
+        <h3>Pré-visualização do enquadramento</h3>
+        <button type="button" id="closeImagePreviewModal" class="btn btn-outline">Fechar</button>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 16px;">Veja exatamente como a imagem ficará enquadrada no card:</p>
+      <div class="preview-modal__stage">
+        <div class="preview-modal__frame">
+          <img id="imagePreviewModalImageBlur" class="service-image-blur" alt="" />
+          <img id="imagePreviewModalImage" class="service-image" alt="Enquadramento" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
